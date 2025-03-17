@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Use a simple API to convert text to speech and download
             // Note: This is a fallback method as direct download from Web Speech API is not supported
-            const apiKey = ''; // Get a free API key from voicerss.org
+            const apiKey = '4f48a1ef9e7e483faefdc97530450aab'; // Get a free API key from voicerss.org
             const langCode = selectedVoice.lang;
             const rate = Math.round(parseFloat(rateInput.value) * 0);
             
