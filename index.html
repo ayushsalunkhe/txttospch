@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceWave - Text to Speech Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-wave-square"></i> VoiceWave</h1>
+            <p>Convert text to speech in multiple languages and voices</p>
+        </header>
+
+        <main>
+            <div class="text-input-container">
+                <textarea id="text-input" placeholder="Enter text to convert to speech..."></textarea>
+                <div class="character-count">
+                    <span id="current-chars">0</span>/<span id="max-chars">500</span> characters
+                </div>
+            </div>
+
+            <div class="controls-container">
+                <div class="control-group">
+                    <label for="language-select">Language & Voice</label>
+                    <select id="language-select"></select>
+                    <select id="voice-select"></select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="rate">Speed</label>
+                    <div class="slider-container">
+                        <input type="range" id="rate" min="0.5" max="2" value="1" step="0.1">
+                        <span id="rate-value">1</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="pitch">Pitch</label>
+                    <div class="slider-container">
+                        <input type="range" id="pitch" min="0" max="2" value="1" step="0.1">
+                        <span id="pitch-value">1</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="volume">Volume</label>
+                    <div class="slider-container">
+                        <input type="range" id="volume" min="0" max="1" value="1" step="0.1">
+                        <span id="volume-value">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="speak-btn" class="primary-btn">
+                    <i class="fas fa-play"></i> Speak
+                </button>
+                <button id="pause-btn" class="secondary-btn" disabled>
+                    <i class="fas fa-pause"></i> Pause
+                </button>
+                <button id="resume-btn" class="secondary-btn" disabled>
+                    <i class="fas fa-forward"></i> Resume
+                </button>
+                <button id="stop-btn" class="secondary-btn" disabled>
+                    <i class="fas fa-stop"></i> Stop
+                </button>
+                <button id="download-btn" class="secondary-btn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+
+            <div class="status-container">
+                <div id="status-message"></div>
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
+            </div>
+        </main>
+
+        <div class="language-badges" id="language-badges">
+            <!-- Language badges will be added dynamically -->
+        </div>
+
+        <footer>
+            <p>Using Web Speech API - Available in modern browsers</p>
+            <p>Created with <i class="fas fa-heart"></i> by VoiceWave</p>
+        </footer>
+    </div>
+
+    <!-- <div id="browser-support-notice" class="hidden">
+        <div class="notice-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Your browser doesn't support the Web Speech API.</p>
+            <p>Please try Chrome, Edge, or Safari for the best experience.</p>
+            <p><a href="test-speech.html" style="color: #007bff; text-decoration: underline;">Run browser compatibility test</a></p>
+        </div>
+    </div> -->
+
+    <script src="js/app.js"></script>
+</body>
+</html> 

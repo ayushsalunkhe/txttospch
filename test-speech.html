@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0069d9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Web Speech API Test</h1>
+    <p>This page tests if your browser supports the Web Speech API.</p>
+    
+    <button id="test-btn">Test Speech Synthesis</button>
+    
+    <div id="result" class="result"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const testBtn = document.getElementById('test-btn');
+            const resultDiv = document.getElementById('result');
+            
+            // Check basic support
+            if ('speechSynthesis' in window) {
+                resultDiv.innerHTML = '<p>Basic support detected: Your browser has the speechSynthesis object.</p>';
+                resultDiv.classList.add('success');
+            } else {
+                resultDiv.innerHTML = '<p>Your browser does not support the Web Speech API.</p>';
+                resultDiv.classList.add('error');
+                testBtn.disabled = true;
+                return;
+            }
+            
+            // Test button click handler
+            testBtn.addEventListener('click', function() {
+                resultDiv.innerHTML = '<p>Testing speech synthesis...</p>';
+                resultDiv.classList.remove('error', 'success');
+                
+                try {
+                    // Create a test utterance
+                    const utterance = new SpeechSynthesisUtterance('This is a test of the speech synthesis API.');
+                    
+                    // Get available voices
+                    const voices = window.speechSynthesis.getVoices();
+                    
+                    // Set up event handlers
+                    utterance.onstart = function() {
+                        resultDiv.innerHTML += '<p>Speech started successfully!</p>';
+                    };
+                    
+                    utterance.onend = function() {
+                        resultDiv.innerHTML += '<p>Speech completed successfully!</p>';
+                        resultDiv.innerHTML += '<p>Your browser fully supports the Web Speech API.</p>';
+                        resultDiv.classList.add('success');
+                    };
+                    
+                    utterance.onerror = function(event) {
+                        resultDiv.innerHTML += `<p>Error occurred: ${event.error}</p>`;
+                        resultDiv.classList.add('error');
+                    };
+                    
+                    // Display voice information
+                    resultDiv.innerHTML += `<p>Found ${voices.length} voices.</p>`;
+                    if (voices.length > 0) {
+                        resultDiv.innerHTML += `<p>First voice: ${voices[0].name} (${voices[0].lang})</p>`;
+                    }
+                    
+                    // Speak
+                    window.speechSynthesis.speak(utterance);
+                    
+                } catch (error) {
+                    resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+                    resultDiv.classList.add('error');
+                }
+            });
+            
+            // Chrome loads voices asynchronously
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = function() {
+                    const voices = window.speechSynthesis.getVoices();
+                    resultDiv.innerHTML += `<p>Voices loaded asynchronously: ${voices.length} voices available.</p>`;
+                };
+            }
+        });
+    </script>
+</body>
+</html> 
